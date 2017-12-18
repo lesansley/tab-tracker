@@ -2,25 +2,25 @@
   <div class="register">
     <h1>Register</h1>
     <form @submit.prevent="register">
-      <div>
-        <input
-            type="email"
-            name="email"
-            v-model="email"
-            placeholder="email"
-        />
-      </div>
-      <div>
-        <input
-            type="password"
-            name="password"
-            v-model="password"
-            placeholder="password"
-        />
-      </div>
-      <div>
-          <button>Register</button>
-      </div>
+      <input
+        type="email"
+        name="email"
+        class="text"
+        v-model="email"
+        placeholder="email"
+      />
+      <input
+        type="password"
+        name="password"
+        class="text"
+        v-model="password"
+        placeholder="password"
+      />
+      <input
+        type="submit"
+        class="button"
+        value="Register"
+      />
     </form>
   </div>
 </template>
