@@ -1,11 +1,19 @@
-module.exports = (sequelize, DataTypes) => {
-  sequelize.define('User', {
-    email: {
-      type: DataTypes.STRING,
-      unique: true
-    },
-    password: {
-      type: DataTypes.STRING
-    }
+const db = require('../db');
+
+module.exports = () => {
+  return new Promise( (resolve, reject) => {
+    db.get().createCollection( 'user',
+      { validator: { $and:
+        [
+         { email: { $regex: /^[\w.+'-]{2,}[@][\w.+-]{2,}$/ } },
+         { password: { $type: 'string' } },
+        ]
+      }})
+      .then(() => {
+        resolve();
+      })
+      .catch((err) =>{
+        reject(err);
+      });
   });
 };
