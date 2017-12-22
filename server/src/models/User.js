@@ -1,28 +1,22 @@
 const db = require('../db');
 
 const coll = 'user';
-const validation = { user: {
-                      validator:
-                        {
-                          $and:
-                            [
-                              { email: { $regex: /^[\w.+'-]{2,}[@][\w.+-]{2,}$/ } },
-                              { password: { $type: 'string' } },
-                            ]
-                        }
-                      }
-                    };
+const validator = {
+  $and: [
+    { email: { $regex: /^[\w.+'-]{2,}[@][\w.+-]{2,}$/ } },
+    { password: { $type: 'string' } },
+  ]
+};
 
 module.exports = () => {
   return new Promise( (resolve, reject) => {
     collectionDoesExist(coll)
       .then( (res) => {
         if(res) return resolve();
-        createCollection(coll, validation.user)
-          .then( () => {
-            setFieldAsUniqueIndex(coll, 'email')
-              .then( () => resolve());
-          });
+        createCollection(coll, { validator } )
+          .then( setFieldAsUniqueIndex(coll, 'email'))
+          .then( resolve() )
+          .catch( err => reject(err));
       })
       .catch( err => reject(err));
   });
@@ -30,7 +24,7 @@ module.exports = () => {
 
 function setFieldAsUniqueIndex(collectionName, field) {
   return new Promise( (resolve, reject) => {
-    db.get().collection(collectionName).createIndex( { [field] : 1 }, {unique: true}  )
+    db.get().collection(collectionName).createIndex( { [field] : 1 }, { unique: true }  )
       .then( res => resolve(res) )
       .catch( err => reject(err) );
   });

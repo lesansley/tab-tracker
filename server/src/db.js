@@ -27,6 +27,7 @@ module.exports = {
       state.db.close()
         .then( () => {
           state.db = null;
+          console.log('Connection to database closed');
           resolve();
         })
         .catch( err => reject(err));
