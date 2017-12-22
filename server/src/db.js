@@ -7,36 +7,29 @@ const url = `mongodb://${config.db.user}:${config.db.password}@${config.db.url}/
 module.exports = {
   connect () {
     return new Promise ( (resolve, reject) => {
-      if (state.db) resolve();
+      if (state.db) return resolve();
       MongoClient.connect(url)
-        .then( (client) => {
-          state.db = client.db(config.db.name);
+        .then( client => {
+          state.db = client;
           resolve();
         })
-        .catch( (err) => {
-          reject(err);
-        });
+        .catch( err => reject(err));
     });
   },
 
   get () {
-    return state.db;
+    return state.db.db(config.db.name);
   },
 
   close () {
     return new Promise ( (resolve, reject) => {
-      if (state.db) {
-        state.db.close()
-          .then( () => {
-            state.db = null;
-            state.mode = null;
-            resolve();
-          })
-          .catch( (err) => {
-            reject(err);
-          });
-      }
-      resolve();
+      if (!state.db) return resolve();
+      state.db.close()
+        .then( () => {
+          state.db = null;
+          resolve();
+        })
+        .catch( err => reject(err));
     });
   }
 };

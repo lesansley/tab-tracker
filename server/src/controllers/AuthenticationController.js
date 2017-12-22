@@ -6,15 +6,16 @@ module.exports = {
     user()
       .then( () => {
         db.get()
-          .collection('user').save(req.body)
-            .then( () => {
+          .collection('user').insertOne(req.body)
+            .then( (data) => {
+              req.body.regDate = Date.now();
               res.send(req.body);
-              console.log('saved to database');
+              console.log(data);
             })
             .catch( err => {
               switch(err.code) {
                 case 121:
-                  // VALIDATION ERR
+                  // CODE FOR VALIDATION ERR
                   break;
                 default:
                   break;
