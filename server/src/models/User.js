@@ -14,8 +14,8 @@ module.exports = () => {
       .then( (res) => {
         if(res) return resolve();
         createCollection(coll, { validator } )
-          .then( setFieldAsUniqueIndex(coll, 'email'))
-          .then( resolve() )
+          .then( () => setFieldAsUniqueIndex(coll, 'email') )
+          .then( () => resolve() )
           .catch( err => reject(err));
       })
       .catch( err => reject(err));
