@@ -1,36 +1,30 @@
 const MongoClient = require('mongodb').MongoClient;
 const config = require('./config/config');
 
-const state = { db: null };
 const url = `mongodb://${config.db.user}:${config.db.password}@${config.db.url}/${config.db.name}`;
 
 module.exports = {
-  connect () {
-    return new Promise ( (resolve, reject) => {
-      if (state.db) return resolve();
-      MongoClient.connect(url)
-        .then( client => {
-          state.db = client;
-          resolve();
-        })
-        .catch( err => reject(err));
-    });
+  async connect () {
+      if (this.db) return console.log('Connected to database');
+      try {
+        this.db = await MongoClient.connect(url);
+      } catch (err) {
+        console.alert(`Unable to connect to database: ${err}`);
+      }
   },
 
-  get () {
-    return state.db.db(config.db.name);
+  async get () {
+    return this.db;
   },
 
-  close () {
-    return new Promise ( (resolve, reject) => {
-      if (!state.db) return resolve();
-      state.db.close()
-        .then( () => {
-          state.db = null;
-          console.log('Connection to database closed');
-          resolve();
-        })
-        .catch( err => reject(err));
-    });
+  async close () {
+    if (!this.db) return ('Not connected to database');
+    try{
+      await this.db.close()
+      this.db = null;
+      console.log('Connection to database closed');
+    } catch (err) {
+      console.alert(`Unable to close connection to database: ${err}`);
+    }
   }
 };
