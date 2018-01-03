@@ -18,18 +18,6 @@ module.exports = async () => {
   } catch (err) {
     console.error(err);
   }
-
-
-/*  return new Promise( (resolve, reject) => {
-    collectionDoesExist(coll)
-      .then( (res) => {
-        if(res) return resolve();
-        createCollection(coll, { validator } )
-          .then( () => resolve() )
-          .catch( err => reject(err));
-      })
-      .catch( err => reject(err));
-  });*/
 };
 
 async function collectionDoesExist(collectionName) {
@@ -40,7 +28,6 @@ async function collectionDoesExist(collectionName) {
   } catch (err) {
     console.error(err);
   }
-
 }
 
 async function createCollection(collectionName, options) {
