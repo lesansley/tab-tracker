@@ -15,12 +15,6 @@ app
 
 require('./routes')(app);
 
-db.connect()
-  .then( () => {
-    app.listen(config.port, () => {
-      console.log(`Listening on Port ${config.port}`);
-    });
-  })
-  .catch( (err) => {
-    console.error(err);
+app.listen(config.port, () => {
+  console.log(`Listening on Port ${config.port}`);
 });

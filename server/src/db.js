@@ -8,6 +8,7 @@ module.exports = {
       if (this.db) return console.log('Connected to database');
       try {
         this.db = await MongoClient.connect(url);
+        console.log('Connected to database');
       } catch (err) {
         console.alert(`Unable to connect to database: ${err}`);
       }
