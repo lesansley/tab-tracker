@@ -13,8 +13,8 @@ module.exports = {
       }
   },
 
-  async get () {
-    return this.db;
+  get () {
+    return this.db.db(config.db.name);
   },
 
   async close () {
