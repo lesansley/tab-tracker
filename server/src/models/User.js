@@ -8,8 +8,19 @@ const validator = {
   ]
 };
 
-module.exports = () => {
-  return new Promise( (resolve, reject) => {
+module.exports = async () => {
+  try {
+    let collection = await collectionDoesExist(coll);
+    if(!collection) {
+      await createCollection(coll, { validator } );
+    }
+    return true;
+  } catch (err) {
+    console.error(err);
+  }
+
+
+/*  return new Promise( (resolve, reject) => {
     collectionDoesExist(coll)
       .then( (res) => {
         if(res) return resolve();
@@ -18,14 +29,14 @@ module.exports = () => {
           .catch( err => reject(err));
       })
       .catch( err => reject(err));
-  });
+  });*/
 };
 
 async function collectionDoesExist(collectionName) {
   try {
     let coll = await db.get().collection(collectionName);
     let count = await coll.find().count();
-    if (count && count > 0) return true;
+    return count && count > 0 ? true : false;
   } catch (err) {
     console.error(err);
   }
