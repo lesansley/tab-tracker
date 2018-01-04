@@ -1,4 +1,5 @@
 const db = require('../db');
+const error = require('../utils/error');
 
 const coll = 'user';
 const validator = {
@@ -17,6 +18,7 @@ module.exports = async () => {
     return true;
   } catch (err) {
     console.error(err);
+    throw
   }
 };
 
@@ -27,6 +29,7 @@ async function collectionDoesExist(collectionName) {
     return count && count > 0 ? true : false;
   } catch (err) {
     console.error(err);
+    throw err;
   }
 }
 
@@ -35,5 +38,6 @@ async function createCollection(collectionName, options) {
     await db.get().createCollection(collectionName, options);
   } catch (err) {
     console.error(err);
+    throw err;
   }
 }
