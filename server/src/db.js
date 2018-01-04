@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const config = require('./config/config');
-const error = require('../utils/error');
+const error = require('./utils/error');
 
 const url = `mongodb://${config.db.user}:${config.db.password}@${config.db.url}/${config.db.name}`;
 

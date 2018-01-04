@@ -10,5 +10,10 @@ module.exports = {
 		code: 2,
 		name: 'Database',
 		message: 'Error connecting to the database'
+	},
+	dataValidity: {
+		code: 3,
+		name: config.projectName,
+		message: 'Submitted data is not valid'
 	}
 };

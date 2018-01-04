@@ -1,10 +1,11 @@
 const db = require('../db');
+const regex = require('../utils/regex');
 const error = require('../utils/error');
 
 const coll = 'user';
 const validator = {
   $and: [
-    { email: { $regex: /^[\w.+'-]{2,}[@][\w.+-]{2,}$/ } },
+    { email: { $regex: regex.email } },
     { password: { $type: 'string' } },
   ]
 };
@@ -18,7 +19,7 @@ module.exports = async () => {
     return true;
   } catch (err) {
     console.error(err);
-    throw
+    throw error.dbConnection;
   }
 };
 
@@ -28,7 +29,6 @@ async function collectionDoesExist(collectionName) {
     let count = await coll.find().count();
     return count && count > 0 ? true : false;
   } catch (err) {
-    console.error(err);
     throw err;
   }
 }
@@ -37,7 +37,6 @@ async function createCollection(collectionName, options) {
   try {
     await db.get().createCollection(collectionName, options);
   } catch (err) {
-    console.error(err);
     throw err;
   }
 }
