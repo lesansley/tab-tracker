@@ -1,10 +1,10 @@
 const config = require('../config/config');
 
 module.exports = {
-	checkUser: {
+	documentUnique: {
 		code: 1,
 		name: config.projectName,
-		message: 'This email has already been registered'
+		message: 'This document is not unique'
 	},
 	dbConnection: {
 		code: 2,
