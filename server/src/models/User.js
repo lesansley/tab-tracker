@@ -6,15 +6,15 @@ const coll = 'user';
 const validator = {
   $and: [
     { email: { $regex: regex.email } },
-    { password: { $type: 'string' } },
+    { password: { $type: 'string' } }
   ]
 };
 
 module.exports = async () => {
   try {
     let collection = await collectionDoesExist(coll);
-    if(!collection) {
-      await createCollection(coll, { validator } );
+    if (!collection) {
+      await createCollection(coll, { validator });
     }
     return true;
   } catch (err) {
@@ -23,17 +23,17 @@ module.exports = async () => {
   }
 };
 
-async function collectionDoesExist(collectionName) {
+async function collectionDoesExist (collectionName) {
   try {
     let coll = await db.get().collection(collectionName);
     let count = await coll.find().count();
-    return count && count > 0 ? true : false;
+    return count && count > 0;
   } catch (err) {
     throw err;
   }
 }
 
-async function createCollection(collectionName, options) {
+async function createCollection (collectionName, options) {
   try {
     await db.get().createCollection(collectionName, options);
   } catch (err) {

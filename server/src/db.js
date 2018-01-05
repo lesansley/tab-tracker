@@ -6,15 +6,15 @@ const url = `mongodb://${config.db.user}:${config.db.password}@${config.db.url}/
 
 module.exports = {
   async connect () {
-      if (this.db) return console.log('Connected to database');
-      try {
-        this.db = await MongoClient.connect(url);
-        console.log('Connected to database');
-        return true;
-      } catch (err) {
-        console.error(err);
-        throw error.dbConnection;
-      }
+    if (this.db) return console.log('Connected to database');
+    try {
+      this.db = await MongoClient.connect(url);
+      console.log('Connected to database');
+      return true;
+    } catch (err) {
+      console.error(err);
+      throw error.dbConnection;
+    }
   },
 
   get () {
@@ -23,8 +23,8 @@ module.exports = {
 
   async close () {
     if (!this.db) return ('Not connected to database');
-    try{
-      await this.db.close()
+    try {
+      await this.db.close();
       this.db = null;
       console.log('Connection to database closed');
     } catch (err) {

@@ -34,6 +34,11 @@ export default {
       password: ''
     };
   },
+  watch: {
+    email (value) {
+      console.log(value);
+    }
+  },
   methods: {
     async register () {
       await AuthenticationService.register({
@@ -42,11 +47,7 @@ export default {
       });
     }
   },
-  watch: {
-    email (value) {
-      console.log(value);
-    }
-  }
+
 };
 </script>
 
