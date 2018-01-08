@@ -14,15 +14,15 @@ module.exports = {
       switch (error.details[0].context.key) {
       case 'email':
         console.error(err.emailFormat);
-        res.status(400).send({err: err.emailFormat.code});
+        res.status(400).send({error: err.emailFormat.code});
         break;
       case 'password':
         console.error(err.passwordFormat);
-        res.status(400).send({err: err.passwordFormat.code});
+        res.status(400).send({error: err.passwordFormat.code});
         break;
       default:
         console.error(err.unknown);
-        res.status(400).send({err: err.unknown.code});
+        res.status(400).send({error: err.unknown.code});
         break;
       }
     } else {

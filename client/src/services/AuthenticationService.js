@@ -1,7 +1,7 @@
 import Api from '@/services/Api';
 
 export default {
-  register (credentials) {
+  async register (credentials) {
     return Api().post('register', credentials);
   }
 };
