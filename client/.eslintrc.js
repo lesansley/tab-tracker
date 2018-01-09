@@ -13,6 +13,7 @@ module.exports = {
 		"no-mixed-spaces-and-tabs": "error",
 		semi: ["error", "always"],
 		"no-console": "off",
-		"vue/html-self-closing": "off"
+		"vue/html-self-closing": "off",
+		"vue/max-attributes-per-line": "off"
 	}
 };
