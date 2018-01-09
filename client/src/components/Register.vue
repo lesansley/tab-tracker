@@ -1,39 +1,47 @@
 <template>
   <v-layout column>
-    <v-flex xs6 offset-xs3>
+    <v-flex
+      xs6
+      offset-xs3
+    >
       <div class="elevation-2 white">
-        <v-toolbar flat dense class="cyan" dark>
+        <v-toolbar
+          flat
+          dense
+          color="cyan"
+          dark
+        >
           <v-toolbar-title>Register</v-toolbar-title>
         </v-toolbar>
         <div class="pl-4 pr-4 pt-2 pb-2">
-          <form @submit.prevent="register">
-            <input
+          <v-form
+            @submit.prevent="register"
+          >
+            <v-text-field
               type="email"
               name="email"
-              class="text"
+              label="Email"
               v-model="email"
-              placeholder="email"
-            />
-            <br />
-            <input
+              required
+            ></v-text-field>
+            <v-text-field
               type="password"
               name="password"
-              class="text"
+              label="Password"
               v-model="password"
-              placeholder="password"
-            />
-            <br />
+              required
+            ></v-text-field>
             <div
               class="error"
               v-html="error"
-            />
-            <br />
-            <input
+            ></div>
+            <v-btn
+              @click="register"
               type="submit"
-              class="v-btn cyan"
-              value="Register"
-            />
-          </form>
+              color="cyan"
+              dark
+            >Register</v-btn>
+          </v-form>
         </div>
       </div>
     </v-flex>
