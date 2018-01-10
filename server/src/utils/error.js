@@ -25,5 +25,15 @@ module.exports = {
     code: 4,
     name: config.projectName,
     message: 'Password format is invalid'
+  },
+  dbRecords: {
+    code: 5,
+    name: config.projectName,
+    message: 'Error accessing records'
+  },
+  loginCredentials: {
+    code: 6,
+    name: config.projectName,
+    message: 'Incorrect email and/or password'
   }
 };

@@ -7,5 +7,8 @@ module.exports = {
     user: process.env.DB_USER || 'ansley',
     password: process.env.DB_PASS || 'tabtracker',
     name: process.env.DB_NAME || 'tab-tracker'
+  },
+  authentication: {
+    jwtSecret: process.env.JWT_SECRET || 'secret'
   }
 };
