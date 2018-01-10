@@ -16,17 +16,18 @@ function jwtSignUser (data) {
 
 module.exports = {
   async register (req, res) {
-    let dbase, data, hash;
+    let dbase, data;
     try {
       await db.connect();
       dbase = db.get();
       await user;
       await d.checkDocumentIsUnique('user', 'email', req.body.email);
-      hash = await h.hashPassword(req.body.password);
-      req.body.password = hash;
+      req.body.password = await h.hashPassword(req.body.password);
       data = await dbase.collection('user').insertOne(req.body);
-      res.status(200).send(data.ops[0]);
-      console.log(data);
+      res.status(200).send({
+        user: data.ops[0],
+        token: jwtSignUser(data.ops[0])
+      });
       db.close();
     } catch (err) {
       console.error(err);
@@ -57,7 +58,7 @@ module.exports = {
                   res.status(403).send(error.loginCredentials);
                 } else {
                   res.status(200).send({
-                    data: docs[0],
+                    user: docs[0],
                     token: jwtSignUser(docs[0])
                   });
                 }
