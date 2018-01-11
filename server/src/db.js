@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 const config = require('./config/config');
 const error = require('./utils/error');
 
@@ -8,7 +8,8 @@ module.exports = {
   async connect () {
     if (this.db) return console.log('Connected to database');
     try {
-      this.db = await MongoClient.connect(url);
+      await mongoose.connect(url);
+      this.db = mongoose.connection;
       console.log('Connected to database');
       return true;
     } catch (err) {
