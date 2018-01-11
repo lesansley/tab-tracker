@@ -19,7 +19,7 @@ module.exports = {
   },
 
   get () {
-    return this.db.db(config.db.name);
+    return this.db;
   },
 
   async close () {
