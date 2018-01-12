@@ -1,9 +1,8 @@
 const express = require('express');
+
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
-
-const config = require('./config/config');
 
 const app = express();
 
@@ -14,6 +13,19 @@ app
 
 require('./routes')(app);
 
-app.listen(config.port, () => {
-  console.log(`Listening on Port ${config.port}`);
+app.use((req, res, next) => {
+  const error = new Error('Not found');
+  error.status = 404;
+  next(error);
 });
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message
+    }
+  });
+});
+
+module.exports = app;

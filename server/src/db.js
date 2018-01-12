@@ -1,14 +1,19 @@
 const mongoose = require('mongoose');
+
 const config = require('./config/config');
 const error = require('./utils/error');
 
 const url = `mongodb://${config.db.user}:${config.db.password}@${config.db.url}/${config.db.name}`;
 
+mongoose.Promise = require('bluebird');
+
 module.exports = {
   async connect () {
     if (this.db) return console.log('Connected to database');
     try {
-      await mongoose.connect(url);
+      await mongoose.connect(url, {
+        useMongoClient: true
+      });
       this.db = mongoose.connection;
       console.log('Connected to database');
       return true;

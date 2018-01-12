@@ -24,14 +24,14 @@ module.exports = {
       await d.checkDocumentIsUnique('user', 'email', req.body.email);
       req.body.password = await h.hashPassword(req.body.password);
       data = await dbase.collection('user').insertOne(req.body);
-      res.status(200).send({
+      res.status(200).json({
         user: data.ops[0],
         token: jwtSignUser(data.ops[0])
       });
       db.close();
     } catch (err) {
       console.error(err);
-      res.status(400).send({err: err.code});
+      res.status(400).json({err: err.code});
       db.close();
     }
   },
@@ -44,20 +44,20 @@ module.exports = {
       cursor = await dbase.collection('user').find({email: req.body.email});
       count = await cursor.count();
       if (count !== 1) {
-        res.status(403).send(error.loginCredentials);
+        res.status(403).json({err: error.loginCredentials});
       } else {
         cursor.forEach(doc => {
           docs.push(doc);
         }, err => {
           if (err) {
-            res.status(500).send(error.dbRecords);
+            res.status(500).json({err: error.dbRecords});
           } else {
             h.comparePassword(req.body.password, docs[0].password)
               .then(isValid => {
                 if (!isValid) {
-                  res.status(403).send(error.loginCredentials);
+                  res.status(403).json({err: error.loginCredentials});
                 } else {
-                  res.status(200).send({
+                  res.status(200).json({
                     user: docs[0],
                     token: jwtSignUser(docs[0])
                   });
@@ -72,7 +72,7 @@ module.exports = {
       }
     } catch (err) {
       console.error(err);
-      res.status(500).send(error.dbRecords);
+      res.status(500).json({err: error.dbRecords});
       db.close();
     }
   }
