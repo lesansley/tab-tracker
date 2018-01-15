@@ -1,14 +1,14 @@
 module.exports = {
   projectName: 'tab-tracker',
   projectId: '',
-  port: process.env.PORT || 8081,
+  port: process.env.PORT,
   db: {
-    url: process.env.DB_URL || 'ds161336.mlab.com:61336',
-    user: process.env.DB_USER || 'ansley',
-    password: process.env.DB_PASS || 'tabtracker',
-    name: process.env.DB_NAME || 'tab-tracker'
+    url: process.env.MONGO_MLAB__URL,
+    user: process.env.MONGO_MLAB__USER,
+    password: process.env.MONGO_MLAB__PASS,
+    name: process.env.MONGO_MLAB__NAME
   },
   authentication: {
-    jwtSecret: process.env.JWT_SECRET || 'secret'
+    jwtSecret: process.env.JWT_SECRET
   }
 };
