@@ -7,34 +7,40 @@ const url = `mongodb://${config.db.user}:${config.db.password}@${config.db.url}/
 
 mongoose.Promise = require('bluebird');
 
-module.exports = {
-  async connect () {
-    if (this.db) return console.log('Connected to database');
-    try {
-      await mongoose.connect(url, {
-        useMongoClient: true
-      });
-      this.db = mongoose.connection;
-      console.log('Connected to database');
-      return true;
-    } catch (err) {
-      console.error(err);
-      throw error.dbConnection;
-    }
-  },
+let db = null;
 
-  get () {
-    return this.db;
-  },
-
-  async close () {
-    if (!this.db) return ('Not connected to database');
-    try {
-      await this.db.close();
-      this.db = null;
-      console.log('Connection to database closed');
-    } catch (err) {
-      console.error(`Unable to close connection to database: ${err}`);
-    }
+async function connect () {
+  if (db) return console.log('Connected to database');
+  try {
+    await mongoose.connect(url, {
+      useMongoClient: true
+    });
+    db = mongoose.connection;
+    console.log('Connected to database');
+    return true;
+  } catch (err) {
+    console.error(err);
+    throw error.dbConnection;
   }
+}
+
+function get () {
+  return db;
+}
+
+async function close () {
+  if (!db) return ('Not connected to database');
+  try {
+    await db.close();
+    db = null;
+    console.log('Connection to database closed');
+  } catch (err) {
+    console.error(`Unable to close connection to database: ${err}`);
+  }
+}
+
+module.exports = {
+  connect,
+  get,
+  close
 };

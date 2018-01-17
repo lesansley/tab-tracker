@@ -5,7 +5,6 @@
 		"MONGO_MLAB_USER": "ansley",
 		"MONGO_MLAB_PASS": "tabtracker",
 		"MONGO_MLAB_NAME": "tab-tracker",
-		"MONGO_MLAB_NAME": "tab-tracker",
 		"PORT": "8081"
 	}
 }
